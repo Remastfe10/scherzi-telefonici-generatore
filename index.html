@@ -128,7 +128,7 @@ footer{text-align:center;color:#626b85;padding:25px;font-size:12px}
   <p>Il riDIVERTITI A FARE SCHERZI TELEFONICI. <b>IL CREATORA DEL SITO NON HA SEMPRE SESPONSABILITA, e tutto nelle mani di come lo utilizzi!.</b> + <b>E SOLO UN PESCATORE NON DA VERI NUMERI AL PRIMO COLPO!</b>.</p>
   <div class="result">
    <div class="result-label">Il tuo numero</div>
-   <div class="generated" id="result"><span class="first">334</span><span class="space">·</span><span class="six">123456</span></div>
+   <div class="generated" id="result"><span class="first">334</span><span class="space">·</span><span class="six">1234567</span></div>
   </div>
   <div class="buttons">
    <button class="btn primary" onclick="generate()">🎲 Genera</button>
@@ -161,9 +161,17 @@ function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
 
 function generate(){
   const first=pick(specialNumbers);
+
   let six="";
-  for(let i=0;i<6;i++) six+=Math.floor(Math.random()*10);
-  current={first,six,full:`${first}${six}`,date:new Date().toLocaleString('it-IT')};
+  for(let i=0;i<7;i++) six+=Math.floor(Math.random()*10);
+
+  current={
+    first,
+    six,
+    full:`${first}${six}`,
+    date:new Date().toLocaleString('it-IT')
+  };
+
   document.getElementById('result').innerHTML=
     `<span class="first">${first}</span><span class="space">·</span><span class="six">${six}</span>`;
 }
@@ -179,22 +187,35 @@ function saveCurrent(){
 function renderSaved(){
  const list=document.getElementById('savedList');
  const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
- if(!saved.length){list.innerHTML='<div class="empty">Nessun numero salvato ancora ✦</div>';return}
+ if(!saved.length){
+   list.innerHTML='<div class="empty">Nessun numero salvato ancora ✦</div>';
+   return;
+ }
+
  list.innerHTML=saved.map((x,i)=>`
   <div class="saved-item">
-   <div><div class="saved-number">${x.first}<span>${x.six}</span></div><small>${x.date}</small></div>
+   <div>
+    <div class="saved-number">${x.first}<span>${x.six}</span></div>
+    <small>${x.date}</small>
+   </div>
    <button class="btn danger" onclick="deleteSaved(${i})">Elimina</button>
   </div>`).join('');
 }
+
 function deleteSaved(i){
  const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
- saved.splice(i,1);localStorage.setItem('nightGeneratorSaved',JSON.stringify(saved));renderSaved();
+ saved.splice(i,1);
+ localStorage.setItem('nightGeneratorSaved',JSON.stringify(saved));
+ renderSaved();
 }
+
 function clearSaved(){
  if(confirm('Vuoi cancellare tutti i numeri salvati?')){
-  localStorage.removeItem('nightGeneratorSaved');renderSaved();
+  localStorage.removeItem('nightGeneratorSaved');
+  renderSaved();
  }
 }
+
 function showPage(page){
  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
  document.getElementById(page).classList.add('active');
@@ -202,8 +223,11 @@ function showPage(page){
  if(page==='saved')renderSaved();
  window.scrollTo({top:0,behavior:'smooth'});
 }
+
 document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-generate();renderSaved();
+
+generate();
+renderSaved();
 </script>
 </body>
 </html>
