@@ -161,11 +161,11 @@ function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
 
 function generate(){
   const first=pick(specialNumbers);
-  let six="";
-  for(let i=0;i<7;i++) six+=Math.floor(Math.random()*10);
-  current={first,six,full:`${first}${six}`,date:new Date().toLocaleString('it-IT')};
+  let digits="";
+  for(let i=0;i<7;i++) digits+=Math.floor(Math.random()*10);
+  current={first,six:digits,full:`${first}${digits}`,date:new Date().toLocaleString('it-IT')};
   document.getElementById('result').innerHTML=
-    `<span class="first">${first}</span><span class="space">·</span><span class="six">${six}</span>`;
+    `<span class="first">${first}</span><span class="space">·</span><span class="six">${digits}</span>`;
 }
 
 function saveCurrent(){
