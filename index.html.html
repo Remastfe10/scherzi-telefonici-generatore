@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>REMAWED10 Generator</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:#f5f7ff}
+body{
+  background:
+    radial-gradient(circle at 20% 10%,rgba(105,75,255,.20),transparent 25%),
+    radial-gradient(circle at 80% 80%,rgba(0,210,255,.12),transparent 25%),
+    linear-gradient(135deg,#05060d,#0b0d1b 55%,#05060d);
+  overflow-x:hidden;
+}
+body:before,body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+  background-image:
+    radial-gradient(circle,#fff 1px,transparent 1.5px),
+    radial-gradient(circle,#9cb7ff 1px,transparent 1.5px),
+    radial-gradient(circle,#fff 1.2px,transparent 1.7px);
+  background-size:97px 97px,151px 151px,233px 233px;
+  background-position:10px 20px,40px 80px,120px 30px;
+  opacity:.55;
+  animation:stars 18s linear infinite;
+}
+body:after{opacity:.25;transform:scale(1.4);animation-duration:30s}
+@keyframes stars{to{transform:translateY(-70px)}}
+
+header{
+  position:sticky;top:0;z-index:10;
+  background:rgba(5,6,13,.72);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.nav{max-width:1050px;margin:auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:900;font-size:20px;letter-spacing:.5px}
+.brand span{color:#7c6cff}
+nav{display:flex;gap:7px}
+nav button{
+  border:0;color:#aeb6d3;background:transparent;padding:10px 14px;border-radius:12px;
+  cursor:pointer;font-weight:700;transition:.2s
+}
+nav button:hover,nav button.active{background:rgba(124,108,255,.18);color:#fff}
+
+main{max-width:1050px;margin:auto;padding:55px 20px}
+.page{display:none}.page.active{display:block}
+.hero,.card{
+  background:rgba(12,15,31,.78);border:1px solid rgba(255,255,255,.09);
+  border-radius:28px;box-shadow:0 20px 70px rgba(0,0,0,.38);
+  backdrop-filter:blur(16px)
+}
+.hero{text-align:center;padding:80px 25px}
+h1{font-size:clamp(42px,8vw,76px);margin:0 0 12px;line-height:1}
+h1 .glow{color:#8b7cff;text-shadow:0 0 25px rgba(124,108,255,.7)}
+h2{font-size:34px;margin-top:0}
+p{color:#9da6c2;line-height:1.65}
+.card{padding:35px}
+
+.btn{
+  border:0;border-radius:14px;padding:14px 20px;font-weight:800;
+  cursor:pointer;font-size:15px;transition:.2s
+}
+.btn:hover{transform:translateY(-2px)}
+.primary{
+  color:white;background:linear-gradient(135deg,#705cff,#9b5cff);
+  box-shadow:0 0 25px rgba(124,92,255,.25)
+}
+.secondary{color:white;background:#1a1e34;border:1px solid #303653}
+.danger{background:#29151d;color:#ff9eae;border:1px solid #5a2533}
+.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+
+.result{
+  margin:35px 0;padding:28px 20px;border-radius:22px;
+  background:rgba(4,6,16,.8);border:1px solid rgba(124,108,255,.25);
+  text-align:center
+}
+.result-label{font-size:12px;color:#737d9c;text-transform:uppercase;letter-spacing:2px;margin-bottom:13px}
+.generated{font-size:clamp(38px,9vw,72px);font-weight:900;letter-spacing:4px}
+.generated .first{color:#fff;text-shadow:0 0 20px rgba(255,255,255,.25)}
+.generated .six{color:#8d7dff;text-shadow:0 0 25px rgba(124,108,255,.65)}
+.generated .space{color:#555c77;margin:0 8px}
+
+.saved-list{display:grid;gap:13px;margin-top:25px}
+.saved-item{
+  background:rgba(7,9,19,.75);border:1px solid rgba(255,255,255,.08);
+  padding:17px;border-radius:16px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px
+}
+.saved-number{font-size:24px;font-weight:900;letter-spacing:2px}
+.saved-number span{color:#8d7dff}
+small{color:#68718d}
+.empty{text-align:center;padding:35px;color:#707a98}
+footer{text-align:center;color:#626b85;padding:25px;font-size:12px}
+
+@media(max-width:650px){
+ .nav{flex-direction:column;gap:12px;align-items:stretch}.brand{text-align:center}
+ nav button{flex:1}.hero{padding:60px 18px}.card{padding:22px}
+ .saved-item{flex-direction:column;align-items:stretch}.saved-item .btn{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="nav">
+  <div class="brand">✦ <span>REMAWED10</span> Generator</div>
+  <nav>
+   <button class="nav-btn active" data-page="home">Home</button>
+   <button class="nav-btn" data-page="generator">Generatore</button>
+   <button class="nav-btn" data-page="saved">Salvati</button>
+  </nav>
+ </div>
+</header>
+
+<main>
+<section id="home" class="page active">
+ <div class="hero">
+  <h1>Benvenuto nel<br><span class="glow">REMAWED10 Generator</span> ✦</h1>
+  <p>Genera il tuo numero TELEFONICO CASUALE PER FARE QUALUNQUE SCHERZO TELEFONICO! lo sviluppatore di questo sito non ha le responsabilita in casi gravi...</p>
+  <button class="btn primary" onclick="showPage('generator')">🎲 Inizia a generare</button>
+ </div>
+</section>
+
+<section id="generator" class="page">
+ <div class="card">
+  <h2>✦ Generatore</h2>
+  <p>Il riDIVERTITI A FARE SCHERZI TELEFONICI. <b>IL CREATORA DEL SITO NON HA SEMPRE SESPONSABILITA, e tutto nelle mani di come lo utilizzi!.</b> + <b>E SOLO UN PESCATORE NON DA VERI NUMERI AL PRIMO COLPO!</b>.</p>
+  <div class="result">
+   <div class="result-label">Il tuo numero</div>
+   <div class="generated" id="result"><span class="first">334</span><span class="space">·</span><span class="six">123456</span></div>
+  </div>
+  <div class="buttons">
+   <button class="btn primary" onclick="generate()">🎲 Genera</button>
+   <button class="btn secondary" onclick="saveCurrent()">💾 Salva</button>
+  </div>
+ </div>
+</section>
+
+<section id="saved" class="page">
+ <div class="card">
+  <h2>★ Salvati</h2>
+  <p>I tuoi numeri rimangono salvati localmente su questo dispositivo.</p>
+  <div id="savedList" class="saved-list"></div>
+  <div class="buttons"><button class="btn danger" onclick="clearSaved()">🗑 Cancella tutto</button></div>
+ </div>
+</section>
+</main>
+
+<footer>✦ REMAWED10 Generator · I dati salvati restano nel browser del dispositivo</footer>
+
+<script>
+const specialNumbers=[
+330,331,333,334,335,336,337,338,339,340,342,343,345,346,347,348,349,
+320,323,327,328,329,380,383,388,389,390,391,392,393,350,351,353,360,
+366,368,370,371,373,377
+];
+let current=null;
+
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+
+function generate(){
+  const first=pick(specialNumbers);
+  let six="";
+  for(let i=0;i<6;i++) six+=Math.floor(Math.random()*10);
+  current={first,six,full:`${first}${six}`,date:new Date().toLocaleString('it-IT')};
+  document.getElementById('result').innerHTML=
+    `<span class="first">${first}</span><span class="space">·</span><span class="six">${six}</span>`;
+}
+
+function saveCurrent(){
+ if(!current) generate();
+ const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
+ saved.unshift(current);
+ localStorage.setItem('nightGeneratorSaved',JSON.stringify(saved));
+ renderSaved(); showPage('saved');
+}
+
+function renderSaved(){
+ const list=document.getElementById('savedList');
+ const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
+ if(!saved.length){list.innerHTML='<div class="empty">Nessun numero salvato ancora ✦</div>';return}
+ list.innerHTML=saved.map((x,i)=>`
+  <div class="saved-item">
+   <div><div class="saved-number">${x.first}<span>${x.six}</span></div><small>${x.date}</small></div>
+   <button class="btn danger" onclick="deleteSaved(${i})">Elimina</button>
+  </div>`).join('');
+}
+function deleteSaved(i){
+ const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
+ saved.splice(i,1);localStorage.setItem('nightGeneratorSaved',JSON.stringify(saved));renderSaved();
+}
+function clearSaved(){
+ if(confirm('Vuoi cancellare tutti i numeri salvati?')){
+  localStorage.removeItem('nightGeneratorSaved');renderSaved();
+ }
+}
+function showPage(page){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(page).classList.add('active');
+ document.querySelectorAll('.nav-btn').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
+ if(page==='saved')renderSaved();
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.nav-btn').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+generate();renderSaved();
+</script>
+</body>
+</html>
