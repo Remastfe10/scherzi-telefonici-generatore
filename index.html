@@ -2,10 +2,10 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>REMAWED10 Generator</title>
 <style>
-*{box-sizing:border-box}
+*{box-sizing:border-box;touch-action:manipulation}
 html,body{margin:0;min-height:100%;font-family:Inter,Arial,sans-serif;color:#f5f7ff}
 body{
   background:
@@ -57,9 +57,40 @@ h2{font-size:34px;margin-top:0}
 p{color:#9da6c2;line-height:1.65}
 .card{padding:35px}
 
+/* Update Banner Style */
+.update-banner{
+  background:linear-gradient(135deg, rgba(124,108,255,.15), rgba(0,210,255,.1));
+  border:1px solid rgba(124,108,255,.3);
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:30px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+.update-banner h3{margin:0 0 10px;color:#a396ff;font-size:20px;display:flex;align-items:center;gap:8px}
+.update-banner p{margin:0 0 15px;font-size:14px;color:#c4cce4}
+.update-banner ul{margin:0 0 20px;padding-left:20px;color:#b0b8d4;font-size:14px;line-height:1.6}
+.update-footer{display:flex;justify-content:flex-end;align-items:center}
+.dont-show-btn{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:#fff;
+  padding:10px 16px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  transition:.2s;
+}
+.dont-show-btn:hover{background:rgba(255,255,255,.15);transform:translateY(-1px)}
+
 .btn{
   border:0;border-radius:14px;padding:14px 20px;font-weight:800;
-  cursor:pointer;font-size:15px;transition:.2s
+  cursor:pointer;font-size:15px;transition:.2s;text-decoration:none;
+  display:inline-flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color: transparent;
 }
 .btn:hover{transform:translateY(-2px)}
 .primary{
@@ -67,6 +98,10 @@ p{color:#9da6c2;line-height:1.65}
   box-shadow:0 0 25px rgba(124,92,255,.25)
 }
 .secondary{color:white;background:#1a1e34;border:1px solid #303653}
+.success{
+  color:white;background:linear-gradient(135deg,#10b981,#059669);
+  box-shadow:0 0 25px rgba(16,185,129,.25)
+}
 .danger{background:#29151d;color:#ff9eae;border:1px solid #5a2533}
 .buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
 
@@ -87,6 +122,7 @@ p{color:#9da6c2;line-height:1.65}
   padding:17px;border-radius:16px;display:flex;align-items:center;
   justify-content:space-between;gap:15px
 }
+.saved-actions{display:flex;gap:8px;align-items:center}
 .saved-number{font-size:24px;font-weight:900;letter-spacing:2px}
 .saved-number span{color:#8d7dff}
 small{color:#68718d}
@@ -96,7 +132,8 @@ footer{text-align:center;color:#626b85;padding:25px;font-size:12px}
 @media(max-width:650px){
  .nav{flex-direction:column;gap:12px;align-items:stretch}.brand{text-align:center}
  nav button{flex:1}.hero{padding:60px 18px}.card{padding:22px}
- .saved-item{flex-direction:column;align-items:stretch}.saved-item .btn{width:100%}
+ .saved-item{flex-direction:column;align-items:stretch}.saved-actions{flex-direction:column;width:100%}
+ .saved-actions .btn{width:100%}
 }
 </style>
 </head>
@@ -124,6 +161,19 @@ footer{text-align:center;color:#626b85;padding:25px;font-size:12px}
 
 <section id="generator" class="page">
  <div class="card">
+  <!-- NUOVO UPDATE v.0.1 BANNER -->
+  <div id="updateBanner" class="update-banner">
+   <h3>🚀 NUOVO UPDATE (v.0.1)</h3>
+   <p>Abbiamo introdotto importanti aggiornamenti per migliorare la tua esperienza di scherzo telefonico:</p>
+   <ul>
+    <li><b>Tasto "CHIAMA ORA 📞" Super Aggiornato:</b> Integrato direttamente il prefisso <b>#31#</b> all'inizio del numero in uscita, sia nel generatore che nella lista dei salvati, per chiamate anonime immediate.</li>
+    <li><b>Fix Zoom Mobile:</b> Ottimizzato perfettamente per smartphone <b>Android e iOS</b>, eliminando completamente l'effetto zoom indesiderato quando tocchi i pulsanti rapidamente.</li>
+   </ul>
+   <div class="update-footer">
+    <button class="dont-show-btn" onclick="dismissUpdate()">Non mostrare più ➔</button>
+   </div>
+  </div>
+
   <h2>✦ Generatore</h2>
   <p>DIVERTITI A FARE SCHERZI TELEFONICI. <b>IL CREATORE DEL SITO NON HA SEMPRE RESPONSABILITÀ, è tutto nelle mani di come lo utilizzi!.</b> + <b>È SOLO UN PESCATORE NON DA VERI NUMERI AL PRIMO COLPO!</b>.</p>
   <div class="result">
@@ -133,6 +183,7 @@ footer{text-align:center;color:#626b85;padding:25px;font-size:12px}
   <div class="buttons">
    <button class="btn primary" onclick="generate()">🎲 Genera</button>
    <button class="btn secondary" onclick="saveCurrent()">💾 Salva</button>
+   <a id="callBtn" class="btn success" href="#">CHIAMA ORA 📞</a>
   </div>
  </div>
 </section>
@@ -166,6 +217,8 @@ function generate(){
   current={first,six:digits,full:`${first}${digits}`,date:new Date().toLocaleString('it-IT')};
   document.getElementById('result').innerHTML=
     `<span class="first">${first}</span><span class="space">·</span><span class="six">${digits}</span>`;
+  
+  document.getElementById('callBtn').href=`tel:%2331%23${current.full}`;
 }
 
 function saveCurrent(){
@@ -183,18 +236,34 @@ function renderSaved(){
  list.innerHTML=saved.map((x,i)=>`
   <div class="saved-item">
    <div><div class="saved-number">${x.first}<span>${x.six}</span></div><small>${x.date}</small></div>
-   <button class="btn danger" onclick="deleteSaved(${i})">Elimina</button>
+   <div class="saved-actions">
+    <a class="btn success" href="tel:%2331%23${x.full}">CHIAMA ORA 📞</a>
+    <button class="btn danger" onclick="deleteSaved(${i})">Elimina</button>
+   </div>
   </div>`).join('');
 }
+
 function deleteSaved(i){
  const saved=JSON.parse(localStorage.getItem('nightGeneratorSaved')||'[]');
  saved.splice(i,1);localStorage.setItem('nightGeneratorSaved',JSON.stringify(saved));renderSaved();
 }
+
 function clearSaved(){
  if(confirm('Vuoi cancellare tutti i numeri salvati?')){
   localStorage.removeItem('nightGeneratorSaved');renderSaved();
  }
 }
+
+function dismissUpdate(){
+  localStorage.setItem('remawedUpdateV1Dismissed', 'true');
+  document.getElementById('updateBanner').style.display = 'none';
+}
+
+// Controlla all'avvio se l'utente aveva già cliccato su "Non mostrare più"
+if(localStorage.getItem('remawedUpdateV1Dismissed') === 'true') {
+  document.getElementById('updateBanner').style.display = 'none';
+}
+
 function showPage(page){
  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
  document.getElementById(page).classList.add('active');
